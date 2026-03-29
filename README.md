@@ -22,6 +22,28 @@ This notebook builds a 6-layer demand forecasting pipeline to predict FY26 Q2 un
 - Stress test mean CWA: 85.53%
 - Stress test standard deviation: 0.59%
 
+## Why the Backtest is 85.7% and Not Higher
+
+The FY26 Q1 backtest score is competitive, but not higher than Demand Planners, for a few practical reasons:
+
+- The project prioritizes an interpretable layered pipeline over aggressive quarter-specific tuning.
+- The long-tail products are harder to forecast, especially low-volume, decline-stage, and NPI-ramp SKUs.
+- Structural improvements such as big-deal decomposition and data-driven external signals change the upstream forecast behavior, which means downstream correction rules need recalibration.
+- Cisco's internal planner benchmark is already strong at 87.2%, so the comparison bar is high.
+
+In short, the model is designed to be understandable and data-driven, but it is not fully optimized for maximum backtest score at any cost.
+
+## Calibration and Fine-Tuning Status
+
+This model is best described as **calibrated and partially tuned**, not fully fine-tuned in the strict production ML sense.
+
+- Several parameters were chosen intentionally, including the baseline window, seasonal weights, blend ratio, clipping thresholds, and correction rules.
+- The pipeline includes business-aware calibration, especially in the correction layer.
+- However, it was not fully re-tuned end to end with strict rolling cross-validation after every structural change.
+- Some backtest choices, such as expert weighting based on historical accuracy tables, can be made more rigorous in a future version.
+
+For a fuller discussion of validation tradeoffs, see [VALIDATION_NOTES.md](VALIDATION_NOTES.md).
+
 ## Files
 
 - `CFL_Forecasting_Model.ipynb` - main notebook
