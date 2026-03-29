@@ -42,6 +42,25 @@ The forecasting pipeline is organized into six layers:
 
 This structure was designed to keep the model interpretable, so each stage of the forecast can be inspected and explained.
 
+## Architecture Flow
+
+For a full project-level flow diagram, see [ARCHITECTURE.md](ARCHITECTURE.md).
+
+```mermaid
+flowchart LR
+    A["Data Pack"] --> B["Parse Actuals + Big Deal + SCMS + VMS + Accuracy Tables"]
+    B --> C["L1-L3 Statistical Forecast"]
+    B --> D["Expert Weighting"]
+    B --> E["External Signal Multipliers"]
+    C --> F["L4 Expert Blend"]
+    D --> F
+    F --> G["L5 External Adjustment"]
+    E --> G
+    G --> H["L6 PLC-aware Correction"]
+    H --> I["Backtest + FY26 Q2 Forecast"]
+    I --> J["Dashboard + CSV Outputs"]
+```
+
 ## Notes
 
 This notebook is presented as an analytical competition project. Some backtest choices, such as expert-weighting based on historical accuracy tables, can be refined further for stricter validation.
